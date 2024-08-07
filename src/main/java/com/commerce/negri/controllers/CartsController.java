@@ -2,7 +2,7 @@ package com.commerce.negri.controllers;
 
 
 import com.commerce.negri.entities.Cart;
-import com.commerce.negri.services.CartsServices;
+import com.commerce.negri.services.CartsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,7 +19,7 @@ import java.util.List;
 public class CartsController {
 
     @Autowired
-    private CartsServices cartService;
+    private CartsService cartService;
 
     @Operation(summary = "Add product to cart", description = "Adds a product to the client's cart with the specified quantity")
     @ApiResponse(responseCode = "201", description = "Product added to cart successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Cart.class)))

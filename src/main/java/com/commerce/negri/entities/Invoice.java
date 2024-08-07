@@ -1,9 +1,11 @@
 package com.commerce.negri.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -13,9 +15,10 @@ public class Invoice {
     @Getter @Setter private Long id;
     @Getter @Setter private List<Cart> carts;
     @Getter @Setter double total;
-    @Getter @Setter LocalDateTime created_at;
+    @Getter @Setter Date created_at;
 
     @ManyToOne @JoinColumn(name = "client_id")
-    private Client client;
+    @JsonIgnore
+    @Getter @Setter private Client client;
 
 }

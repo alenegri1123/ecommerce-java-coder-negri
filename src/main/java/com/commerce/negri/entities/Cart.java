@@ -1,5 +1,6 @@
 package com.commerce.negri.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,10 +14,11 @@ public class Cart {
     @Getter @Setter private Boolean delivered;
 
     @ManyToOne @JoinColumn(name = "product_id")
-    private Product product;
+    @JsonIgnore
+    @Getter @Setter private Product product;
 
     @ManyToOne @JoinColumn(name = "client_id")
-    private Client client;
-
+    @JsonIgnore
+    @Getter @Setter private Client client;
 
 }

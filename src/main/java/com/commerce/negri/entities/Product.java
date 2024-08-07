@@ -12,10 +12,10 @@ public class Product {
     @Getter @Setter private Long id;
     @Getter @Setter private String title;
     @Getter @Setter private Integer stock;
-    @Getter @Setter private double price;
+    @Getter @Setter private Double price;
 
     @OneToMany(mappedBy = "product_id", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cart> carts;
+    @Getter @Setter private List<Cart> carts;
 
 
 
