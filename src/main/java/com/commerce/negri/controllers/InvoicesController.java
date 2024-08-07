@@ -47,7 +47,7 @@ public class InvoicesController {
     public ResponseEntity<Invoice> getInvoicesByClientId(@PathVariable Long clientId) {
         try {
             Invoice invoice = invoiceService.getInvoicesByClientId(clientId);
-            return ResponseEntity.ok(invoice);
+            return ResponseEntity.status(HttpStatus.CREATED).body(invoice);
         } catch (RuntimeException e) {
             // System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
