@@ -5,33 +5,35 @@ import com.commerce.negri.repositories.ClientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 
 public class ClientsService {
-    @Autowired private ClientsRepository repository;
+    @Autowired private ClientsRepository clientsRepository;
 
     //metodos para poder gestionar CRUD
     //Crear/Guardar cliente
-    public Client save(Client client) {
-        return repository.save(client);
+    public Client registerClient(Client client) {
+        return clientsRepository.save(client);
     }
 
-    //leer todos los clientes
-    public List<Client> read() {
-        return repository.findAll();
-    }
-
-    //Buscar 1 cliente
-    private Optional<Client> readOne(Long id) {
-        return repository.findById(id);
-    }
-
-    //Eliminar un cliente
-    public void deleteOne(Long id) {
-        repository.deleteById(id);
+    public Client updateClient(Long id, Client clientDetails) {
+        Optional<Client> client = clientsRepository.findById(id);
+        if (client.isPresent()) {
+            Client foundClient = client.get();
+            if (clientDetails.getName() != null) {
+                foundClient.setName(clientDetails.getName());
+            }
+            if (clientDetails.getDocnumber() != null) {
+                foundClient.setDocnumber(clientDetails.getDocnumber());
+            }
+            return clientsRepository.save(foundClient);
+        } else {
+            throw new RuntimeException("Client not found");
+        }
     }
 
 }
