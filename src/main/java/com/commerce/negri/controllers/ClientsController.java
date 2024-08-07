@@ -4,6 +4,9 @@ package com.commerce.negri.controllers;
 import com.commerce.negri.entities.Client;
 import com.commerce.negri.services.ClientsService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,37 +21,37 @@ import java.util.Optional;
 public class ClientsController {
 
     @Autowired
-    private ClientsService clientsServices;
+    private ClientsService clientsService;
 
-    PostMapping
-    public ResponseEntity<Client> saveClient(@RequestBody Client data) {
+    @Operation(summary = "Register a new client", description = "Registers a new client with the provided details")
+    @ApiResponse(responseCode = "200", description = "Client registered successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)))
+    @ApiResponse(responseCode = "400", description = "Bad request")
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+    @PostMapping("/register")
+    public ResponseEntity<Client> registerClient(@RequestBody Client client) {
         try {
-            Client client = clientsServices.saveClient(data);
-            return new ResponseEntity<>(client, HttpStatus.CREATED);
+            Client newclient = clientsService.registerClient(client);
+            return ResponseEntity.ok(newclient);
         } catch (Exception e) {
-            System.out.println("Error de registro");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Client> readClient(PathVariable Integer id) {
+    @Operation(summary = "Update client profile", description = "Updates the profile of the authenticated client")
+    @ApiResponse(responseCode = "200", description = "Client profile updated successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)))
+    @ApiResponse(responseCode = "400", description = "Bad request")
+    @ApiResponse(responseCode = "404", description = "Client not found")
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+    @PutMapping("/me")
+    public ResponseEntity<Client> updateClient(@RequestBody Client client) {
         try {
-            Optional<Client> clients = clientsServices.readOne(id);
-            if (clients.isPresent()) {
-                return ResponseEntity.ok(clients.get());
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+            return ResponseEntity.ok(clientsService.updateClient(client.getId(), client));
+        } catch (RuntimeException e) {
+            // System.out.println(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (Exception e) {
-            System.out.println(e);
+            // System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    GetMapping
-    public ResponseEntity
-
-
-
 }
