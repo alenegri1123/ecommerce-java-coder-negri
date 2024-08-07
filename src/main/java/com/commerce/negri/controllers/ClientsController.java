@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path ="api/v1/auth/register")
+@RequestMapping(path ="api/v1/auth")
 @Tag(name= "Clients Route", description= "Clients CRUD")
 public class ClientsController {
 
