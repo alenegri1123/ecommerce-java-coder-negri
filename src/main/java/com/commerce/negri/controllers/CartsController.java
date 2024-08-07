@@ -69,7 +69,7 @@ public class CartsController {
     public ResponseEntity<List<Cart>> findByClientIdAndDelivered(@PathVariable Long clid) {
         try {
             List<Cart> carts = cartService.findByClientIdAndDelivered(clid);
-            return ResponseEntity.ok(carts);
+            return ResponseEntity.status(HttpStatus.CREATED).body(carts);
         }catch (RuntimeException e) {
             // System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
