@@ -16,9 +16,6 @@ public class Invoice {
     @Getter @Setter LocalDateTime created_at;
 
     @ManyToOne @JoinColumn(name = "client_id")
-    private Client client_id;
-
-
-
+    private Client client;
 
 }
